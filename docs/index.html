@@ -75,7 +75,29 @@ const GAMES = [
     files: [
       { path: "DAVE.EXE", url: RAW + "/LEVELS/DDAVE/DAVE.EXE" },
       { path: "DSCORES.DAV", url: RAW + "/LEVELS/DDAVE/DSCORES.DAV" },
-    ]
+    ],
+    dosboxConf: [
+      "[sdl]",
+      "fullscreen=false",
+      "",
+      "[dosbox]",
+      "machine=ega",
+      "memsize=4",
+      "",
+      "[cpu]",
+      "core=normal",
+      "cputype=386",
+      "cycles=fixed 1000",
+      "",
+      "[render]",
+      "aspect=true",
+      "",
+      "[autoexec]",
+      "mount c .",
+      "c:",
+      "DAVE.EXE",
+      "exit",
+    ].join("\n")
   },
   {
     id: "pako",
@@ -161,7 +183,7 @@ async function launchGame(game) {
     }));
 
     currentDos = Dos(container, {
-      dosboxConf: dosboxConf(game.command),
+      dosboxConf: game.dosboxConf || dosboxConf(game.command),
       initFs,
       autoStart: true,
       onEvent: (event) => {
