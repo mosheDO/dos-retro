@@ -17,7 +17,7 @@
   .game-btn.active { background: #e94560; border-color: #e94560; }
   #dos-container { flex: 1; position: relative; background: #000; }
   #dos-container > div { width: 100% !important; height: 100% !important; }
-  #placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #555; font-size: 18px; flex-direction: column; gap: 8px; }
+  #placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #555; font-size: 18px; flex-direction: column; gap: 8px; z-index: 1; pointer-events: none; }
   #placeholder small { font-size: 13px; color: #444; }
 </style>
 </head>
@@ -39,24 +39,58 @@
 
 <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
 <script>
+const RAW = "https://raw.githubusercontent.com/mosheDO/next-challenge-200-plus/master";
+
 const GAMES = [
   {
     id: "greedy",
     title: "Greedy",
     subtitle: "Pac-Man clone (1996)",
-    bundle: "https://raw.githubusercontent.com/mosheDO/next-challenge-200-plus/master/bundles/greedy.jsdos"
+    command: "GREEDY.EXE",
+    files: [
+      { path: "GREEDY.EXE", url: RAW + "/ARCADE/PACMAN/GREEDY.EXE" },
+      { path: "GREEDY.CUS", url: RAW + "/ARCADE/PACMAN/GREEDY.CUS" },
+      { path: "GREEDY.FR", url: RAW + "/ARCADE/PACMAN/GREEDY.FR" },
+      { path: "GREEDY.US", url: RAW + "/ARCADE/PACMAN/GREEDY.US" },
+      { path: "GREEDFIX.COM", url: RAW + "/ARCADE/PACMAN/GREEDFIX.COM" },
+      { path: "GREEDY.BA1", url: RAW + "/ARCADE/PACMAN/Greedy%20(1996).ba1" },
+    ]
   },
   {
     id: "speed-haste",
     title: "Speed Haste",
     subtitle: "Racing (1996)",
-    bundle: "https://raw.githubusercontent.com/mosheDO/next-challenge-200-plus/master/bundles/speed-haste.jsdos"
+    command: "SPEED.EXE",
+    files: [
+      { path: "SPEED.EXE", url: RAW + "/DRIVING/SPEED/SPEED.EXE" },
+      { path: "DOS4GW.EXE", url: RAW + "/DRIVING/SPEED/DOS4GW.EXE" },
+      { path: "SPEED.CFG", url: RAW + "/DRIVING/SPEED/SPEED.CFG" },
+    ]
   },
   {
     id: "ddave",
     title: "Dangerous Dave",
     subtitle: "Platformer (1990)",
-    bundle: "https://raw.githubusercontent.com/mosheDO/next-challenge-200-plus/master/bundles/ddave.jsdos"
+    command: "DAVE.EXE",
+    files: [
+      { path: "DAVE.EXE", url: RAW + "/LEVELS/DDAVE/DAVE.EXE" },
+      { path: "DSCORES.DAV", url: RAW + "/LEVELS/DDAVE/DSCORES.DAV" },
+    ]
+  },
+  {
+    id: "pako",
+    title: "PAKO II",
+    subtitle: "Pac-Man clone (1996)",
+    command: "pako.exe",
+    files: [
+      { path: "pako.exe", url: RAW + "/ARCADE/PAKO/pako.exe" },
+      { path: "PAKO2.D01", url: RAW + "/ARCADE/PAKO/PAKO2.D01" },
+      { path: "PAKO2.D02", url: RAW + "/ARCADE/PAKO/PAKO2.D02" },
+      { path: "PAKO2.D03", url: RAW + "/ARCADE/PAKO/PAKO2.D03" },
+      { path: "PAKO2.D04", url: RAW + "/ARCADE/PAKO/PAKO2.D04" },
+      { path: "PAKO2.D05", url: RAW + "/ARCADE/PAKO/PAKO2.D05" },
+      { path: "PAKO2.HI", url: RAW + "/ARCADE/PAKO/PAKO2.HI" },
+    ]
   }
 ];
 
@@ -65,6 +99,32 @@ const list = document.getElementById("game-list");
 const placeholder = document.getElementById("placeholder");
 
 let currentDos = null;
+
+function dosboxConf(command) {
+  return [
+    "[sdl]",
+    "fullscreen=false",
+    "output=overlay",
+    "",
+    "[dosbox]",
+    "machine=svga_s3",
+    "memsize=16",
+    "",
+    "[render]",
+    "aspect=true",
+    "scaler=normal2x",
+    "",
+    "[cpu]",
+    "core=auto",
+    "cycles=auto",
+    "",
+    "[autoexec]",
+    "mount c .",
+    "c:",
+    command,
+    "exit",
+  ].join("\n");
+}
 
 function renderGames() {
   list.innerHTML = "";
@@ -92,13 +152,27 @@ async function launchGame(game) {
     if (btn.textContent === game.title) btn.classList.add("active");
   }
 
-  currentDos = Dos(container, {
-    url: game.bundle,
-  });
+  try {
+    const initFs = await Promise.all(game.files.map(async (f) => {
+      const resp = await fetch(f.url);
+      if (!resp.ok) throw new Error("Failed to fetch " + f.path);
+      const buf = await resp.arrayBuffer();
+      return { path: f.path, contents: new Uint8Array(buf) };
+    }));
 
-  currentDos.on("error", (e) => {
-    placeholder.innerHTML = "<div style='color:#e94560'>Error loading game</div>";
-  });
+    currentDos = Dos(container, {
+      dosboxConf: dosboxConf(game.command),
+      initFs,
+      autoStart: true,
+      onEvent: (event) => {
+        if (event === "ci-ready") {
+          placeholder.style.display = "none";
+        }
+      },
+    });
+  } catch (e) {
+    placeholder.innerHTML = "<div style='color:#e94560'>Error: " + e.message + "</div>";
+  }
 }
 
 renderGames();
