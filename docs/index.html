@@ -77,26 +77,13 @@ const GAMES = [
       { path: "DSCORES.DAV", url: RAW + "/LEVELS/DDAVE/DSCORES.DAV" },
     ],
     dosboxConf: [
-      "[sdl]",
-      "fullscreen=false",
-      "",
-      "[dosbox]",
-      "machine=ega",
-      "memsize=4",
+      "[render]",
+      "frameskip=0",
+      "aspect=false",
       "",
       "[cpu]",
-      "core=normal",
-      "cputype=386",
-      "cycles=fixed 1000",
-      "",
-      "[render]",
-      "aspect=true",
-      "",
-      "[autoexec]",
-      "mount c .",
-      "c:",
-      "DAVE.EXE",
-      "exit",
+      "cputype=auto",
+      "cycles=30000 fixed",
     ].join("\n")
   },
   {
@@ -122,30 +109,63 @@ const placeholder = document.getElementById("placeholder");
 
 let currentDos = null;
 
-function dosboxConf(command) {
-  return [
-    "[sdl]",
-    "fullscreen=false",
-    "output=overlay",
-    "",
-    "[dosbox]",
-    "machine=svga_s3",
-    "memsize=16",
-    "",
-    "[render]",
-    "aspect=true",
-    "scaler=normal2x",
-    "",
-    "[cpu]",
-    "core=auto",
-    "cycles=auto",
-    "",
-    "[autoexec]",
-    "mount c .",
-    "c:",
-    command,
-    "exit",
-  ].join("\n");
+function parseIni(text) {
+  const obj = {};
+  let section = null;
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const m = trimmed.match(/^\[(.+)\]$/);
+    if (m) { section = m[1]; if (!obj[section]) obj[section] = {}; continue; }
+    const kv = trimmed.match(/^(\w+)=(.*)$/);
+    if (kv && section) { obj[section][kv[1]] = kv[2]; continue; }
+    if (section) {
+      if (!obj[section]._lines) obj[section]._lines = [];
+      obj[section]._lines.push(trimmed);
+    }
+  }
+  return obj;
+}
+
+function serializeIni(obj) {
+  const parts = [];
+  for (const [section, keys] of Object.entries(obj)) {
+    parts.push("[" + section + "]");
+    for (const [k, v] of Object.entries(keys)) {
+      if (k === "_lines") continue;
+      parts.push(k + "=" + v);
+    }
+    if (keys._lines) {
+      for (const line of keys._lines) parts.push(line);
+    }
+    parts.push("");
+  }
+  while (parts.length > 0 && parts[parts.length - 1] === "") parts.pop();
+  return parts.join("\n");
+}
+
+function defaultConf(command) {
+  return {
+    sdl: { fullscreen: "false", output: "overlay" },
+    dosbox: { machine: "svga_s3", memsize: "16" },
+    render: { aspect: "true", scaler: "normal2x" },
+    cpu: { core: "auto", cycles: "auto" },
+    autoexec: { _lines: ["mount c .", "c:", command, "exit"] }
+  };
+}
+
+function mergeConfigs(base, override) {
+  const result = {};
+  for (const section of Object.keys(base)) result[section] = { ...base[section] };
+  for (const section of Object.keys(override)) {
+    if (!result[section]) result[section] = {};
+    if (override[section]._lines) result[section]._lines = override[section]._lines;
+    for (const key of Object.keys(override[section])) {
+      if (key === "_lines") continue;
+      result[section][key] = override[section][key];
+    }
+  }
+  return result;
 }
 
 function renderGames() {
@@ -182,8 +202,12 @@ async function launchGame(game) {
       return { path: f.path, contents: new Uint8Array(buf) };
     }));
 
+    const base = defaultConf(game.command);
+    const overrides = game.dosboxConf ? parseIni(game.dosboxConf) : {};
+    const merged = mergeConfigs(base, overrides);
+
     currentDos = Dos(container, {
-      dosboxConf: game.dosboxConf || dosboxConf(game.command),
+      dosboxConf: serializeIni(merged),
       initFs,
       autoStart: true,
       onEvent: (event) => {
