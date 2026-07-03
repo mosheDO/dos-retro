@@ -6,7 +6,7 @@ DOS games playable in the browser via [js-dos](https://js-dos.com). No downloads
 
 ## How it works
 
-- The site is a static page hosted on GitHub Pages
+- The site is a static page hosted on GitHub Pages.
 - Each game entry in `docs/index.html` specifies its files (via raw `fetch`) and a `dosboxConf` (inline or generated)
 - A default DOSBox config is generated per-game from `defaultConf(command)` — each game only needs to override the specific keys that differ (e.g. `machine=vesa_oldvbe`, `frameskip=0`). Overrides are merged at the key level via `parseIni`/`mergeConfigs`/`serializeIni`
 - Game files are hosted on [next-challenge-200-plus](https://github.com/mosheDO/next-challenge-200-plus) and fetched from `raw.githubusercontent.com`
