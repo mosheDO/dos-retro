@@ -14,7 +14,7 @@ DOS games playable in the browser via [js-dos](https://js-dos.com). No downloads
 
 ## Adding a game
 
-1. Upload the game's files to [next-challenge-200-plus](https://github.com/mosheDO/next-challenge-200-plus) under the appropriate directory
+1. Upload the game's files to [next-challenge-200-plus](https://github.com/mosheDO/next-challenge-200-plus) under the appropriate directory.
 2. Add an entry to the `GAMES` array in `docs/index.html`:
    ```js
    {
