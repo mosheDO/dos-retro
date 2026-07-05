@@ -41,6 +41,28 @@
 <script>
 const RAW = "https://raw.githubusercontent.com/mosheDO/next-challenge-200-plus/master";
 
+const CFG = {
+  svga: [
+    "[dosbox]",
+    "machine=svga_s3",
+    "[render]",
+    "aspect=false",
+  ].join("\n"),
+  vesa: [
+    "[dosbox]",
+    "machine=vesa_oldvbe",
+  ].join("\n"),
+  dave: [
+    "[render]",
+    "frameskip=0",
+    "aspect=false",
+    "",
+    "[cpu]",
+    "cputype=auto",
+    "cycles=30000 fixed",
+  ].join("\n"),
+};
+
 const GAMES = [
   {
     id: "greedy",
@@ -57,12 +79,7 @@ const GAMES = [
       { path: "IAFIX.BAT", url: RAW + "/ARCADE/PACMAN/IAFIX.BAT" },
 
     ],
-    dosboxConf: [
-      "[dosbox]",
-      "machine=svga_s3",
-      "[render]",
-      "aspect=false",
-    ].join("\n")
+    dosboxConf: CFG.svga
   },
   {
     id: "speed-haste",
@@ -76,10 +93,7 @@ const GAMES = [
       { path: "SPEEDH.JCL", url: RAW + "/DRIVING/SPEED/SPEEDH.JCL" },
       { path: "RECORDS.LST", url: RAW + "/DRIVING/SPEED/RECORDS.LST" },
     ],
-    dosboxConf: [
-      "[dosbox]",
-      "machine=vesa_oldvbe",
-    ].join("\n")
+    dosboxConf: CFG.vesa
   },
   {
     id: "skyroads",
@@ -111,12 +125,7 @@ const GAMES = [
       { path: "WORLD0.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD0.LZS" },
       { path: "WORLD1.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD1.LZS" },
     ],
-    dosboxConf: [
-      "[dosbox]",
-      "machine=svga_s3",
-      "[render]",
-      "aspect=false",
-    ].join("\n")
+    dosboxConf: CFG.svga
   },
   {
     id: "ddave",
@@ -127,15 +136,7 @@ const GAMES = [
       { path: "DAVE.EXE", url: RAW + "/LEVELS/DDAVE/DAVE.EXE" },
       { path: "DSCORES.DAV", url: RAW + "/LEVELS/DDAVE/DSCORES.DAV" },
     ],
-    dosboxConf: [
-      "[render]",
-      "frameskip=0",
-      "aspect=false",
-      "",
-      "[cpu]",
-      "cputype=auto",
-      "cycles=30000 fixed",
-    ].join("\n")
+    dosboxConf: CFG.dave
   },
   {
     id: "pako",
@@ -229,12 +230,7 @@ const GAMES = [
       { path: "HELPME.EXE", url: RAW + "/LEVELS/JAZZ/HELPME.EXE" },
       { path: "EPIC.ANS", url: RAW + "/LEVELS/JAZZ/EPIC.ANS" },
     ],
-    dosboxConf: [
-      "[dosbox]",
-      "machine=svga_s3",
-      "[render]",
-      "aspect=false",
-    ].join("\n")
+    dosboxConf: CFG.svga
   }
 ];
 
