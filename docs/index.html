@@ -48,10 +48,6 @@ const CFG = {
     "[render]",
     "aspect=false",
   ].join("\n"),
-  vesa: [
-    "[dosbox]",
-    "machine=vesa_oldvbe",
-  ].join("\n"),
   dave: [
     "[render]",
     "frameskip=0",
@@ -93,7 +89,7 @@ const GAMES = [
       { path: "SPEEDH.JCL", url: RAW + "/DRIVING/SPEED/SPEEDH.JCL" },
       { path: "RECORDS.LST", url: RAW + "/DRIVING/SPEED/RECORDS.LST" },
     ],
-    dosboxConf: CFG.vesa
+    dosboxConf: CFG.svga
   },
   {
     id: "skyroads",
