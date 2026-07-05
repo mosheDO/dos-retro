@@ -110,7 +110,13 @@ const GAMES = [
       { path: "TREKDAT.LZS", url: RAW + "/DRIVING/SKYROADS/TREKDAT.LZS" },
       { path: "WORLD0.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD0.LZS" },
       { path: "WORLD1.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD1.LZS" },
-    ]
+    ],
+    dosboxConf: [
+      "[dosbox]",
+      "machine=svga_s3",
+      "[render]",
+      "aspect=false",
+    ].join("\n")
   },
   {
     id: "ddave",
