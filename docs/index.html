@@ -166,15 +166,6 @@ const GAMES = [
     dosboxConf: CFG.svga
 
   },
-  {
-    id: "mario",
-    title: "Mario Brothers",
-    subtitle: "Platformer (1990)",
-    command: "MARIO.EXE",
-    files: [
-      { path: "MARIO.EXE", url: RAW + "/LEVELS/MARIO/MARIO.EXE" },
-    ]
-  }
 ];
 
 const container = document.getElementById("dos-container");
@@ -220,7 +211,7 @@ function serializeIni(obj) {
 
 function defaultConf(command) {
   return {
-    sdl: { fullscreen: "false", output: "overlay" },
+    sdl: { fullscreen: "false", output: "surface" },
     dosbox: { machine: "svga_s3", memsize: "16" },
     render: { aspect: "true", scaler: "normal2x" },
     cpu: { core: "auto", cycles: "auto" },
@@ -296,6 +287,7 @@ async function launchGame(game) {
 }
 </script>
 <script src="games/jazz.js"></script>
+<script src="games/mario.js"></script>
 <script>
 renderGames();
 </script>
