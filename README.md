@@ -15,9 +15,9 @@ DOS games playable in the browser via [js-dos](https://js-dos.com). No downloads
 ## Adding a game
 
 1. Upload the game's files to [next-challenge-200-plus](https://github.com/mosheDO/next-challenge-200-plus) under the appropriate directory.
-2. Add an entry to the `GAMES` array in `docs/index.html`:
+2. Create `docs/games/<id>.js` (one file per game) that pushes onto the global `GAMES` array:
    ```js
-   {
+   GAMES.push({
      id: "my-game",
      title: "My Game",
      subtitle: "Genre (Year)",
@@ -27,14 +27,12 @@ DOS games playable in the browser via [js-dos](https://js-dos.com). No downloads
        { path: "GAME.DAT", url: RAW + "/PATH/GAME.DAT" },
      ],
      // optional: only keys that differ from the default
-     dosboxConf: [
-       "[section]",
-       "key=value",
-     ].join("\n")
-   }
+     dosboxConf: CFG.svga, // or an inline .join("\n") string
+   });
    ```
-3. No `dosboxConf` is needed if the default config (SVGA, aspect, normal2x scaler) works — the `[autoexec]` is generated from `command` automatically
-4. Push — the game appears on the site automatically
+3. Add a `<script src="games/my-game.js"></script>` tag to `docs/index.html` next to the other game tags (it must come after the inline script that defines `GAMES` / `RAW` / `CFG` and before the final `renderGames()` call).
+4. No `dosboxConf` is needed if the default config (SVGA, aspect, normal2x scaler) works — the `[autoexec]` is generated from `command` automatically
+5. Push — the game appears on the site automatically
 
 ## Currently playable
 

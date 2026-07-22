@@ -49,124 +49,9 @@ const CFG = {
     "[render]",
     "aspect=false",
   ].join("\n"),
-  dave: [
-    "[render]",
-    "frameskip=0",
-    "aspect=false",
-    "",
-    "[cpu]",
-    "cputype=auto",
-    "cycles=30000 fixed",
-  ].join("\n"),
 };
 
-const GAMES = [
-  {
-    id: "greedy",
-    title: "Greedy",
-    subtitle: "Pac-Man clone (1996)",
-    command: "GREEDFIX.COM",
-    files: [
-      { path: "GREEDY.EXE", url: RAW + "/ARCADE/PACMAN/GREEDY.EXE" },
-      { path: "GREEDY.CUS", url: RAW + "/ARCADE/PACMAN/GREEDY.CUS" },
-      { path: "GREEDY.FR", url: RAW + "/ARCADE/PACMAN/GREEDY.FR" },
-      { path: "GREEDY.US", url: RAW + "/ARCADE/PACMAN/GREEDY.US" },
-      { path: "GREEDFIX.COM", url: RAW + "/ARCADE/PACMAN/GREEDFIX.COM" },
-      { path: "Greedy (1996).ba1", url: RAW + "/ARCADE/PACMAN/Greedy (1996).ba1" },
-      { path: "IAFIX.BAT", url: RAW + "/ARCADE/PACMAN/IAFIX.BAT" },
-
-    ],
-    dosboxConf: CFG.svga
-  },
-  {
-    id: "speed-haste",
-    title: "Speed Haste",
-    subtitle: "Racing (1996)",
-    command: "SPEED.EXE -novbl",
-    files: [
-      { path: "SPEED.EXE", url: RAW + "/DRIVING/SPEED/SPEED.EXE" },
-      { path: "DOS4GW.EXE", url: RAW + "/DRIVING/SPEED/DOS4GW.EXE" },
-      { path: "SPEED.CFG", url: RAW + "/DRIVING/SPEED/SPEED.CFG" },
-      { path: "SPEEDH.JCL", url: RAW + "/DRIVING/SPEED/SPEEDH.JCL" },
-      { path: "RECORDS.LST", url: RAW + "/DRIVING/SPEED/RECORDS.LST" },
-    ],
-    dosboxConf: CFG.svga
-  },
-  {
-    id: "skyroads",
-    title: "SkyRoads",
-    subtitle: "3D Racing (1994)",
-    command: "SKYROADS.EXE",
-    files: [
-      { path: "ANIM.LZS", url: RAW + "/DRIVING/SKYROADS/ANIM.LZS" },
-      { path: "CARS.LZS", url: RAW + "/DRIVING/SKYROADS/CARS.LZS" },
-      { path: "DASHBRD.LZS", url: RAW + "/DRIVING/SKYROADS/DASHBRD.LZS" },
-      { path: "DEMO.REC", url: RAW + "/DRIVING/SKYROADS/DEMO.REC" },
-      { path: "FUL_DISP.DAT", url: RAW + "/DRIVING/SKYROADS/FUL_DISP.DAT" },
-      { path: "GOMENU.LZS", url: RAW + "/DRIVING/SKYROADS/GOMENU.LZS" },
-      { path: "HELPMENU.LZS", url: RAW + "/DRIVING/SKYROADS/HELPMENU.LZS" },
-      { path: "INTRO.LZS", url: RAW + "/DRIVING/SKYROADS/INTRO.LZS" },
-      { path: "INTRO.SND", url: RAW + "/DRIVING/SKYROADS/INTRO.SND" },
-      { path: "MAINMENU.LZS", url: RAW + "/DRIVING/SKYROADS/MAINMENU.LZS" },
-      { path: "MUZAX.LZS", url: RAW + "/DRIVING/SKYROADS/MUZAX.LZS" },
-      { path: "ORDER_PL.LZS", url: RAW + "/DRIVING/SKYROADS/ORDER_PL.LZS" },
-      { path: "ORDER_QU.LZS", url: RAW + "/DRIVING/SKYROADS/ORDER_QU.LZS" },
-      { path: "OXY_DISP.DAT", url: RAW + "/DRIVING/SKYROADS/OXY_DISP.DAT" },
-      { path: "ROADS.LZS", url: RAW + "/DRIVING/SKYROADS/ROADS.LZS" },
-      { path: "SETMENU.LZS", url: RAW + "/DRIVING/SKYROADS/SETMENU.LZS" },
-      { path: "SFX.SND", url: RAW + "/DRIVING/SKYROADS/SFX.SND" },
-      { path: "SKYROADS.CFG", url: RAW + "/DRIVING/SKYROADS/SKYROADS.CFG" },
-      { path: "SKYROADS.EXE", url: RAW + "/DRIVING/SKYROADS/SKYROADS.EXE" },
-      { path: "SPEED.DAT", url: RAW + "/DRIVING/SKYROADS/SPEED.DAT" },
-      { path: "TREKDAT.LZS", url: RAW + "/DRIVING/SKYROADS/TREKDAT.LZS" },
-      { path: "WORLD0.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD0.LZS" },
-      { path: "WORLD1.LZS", url: RAW + "/DRIVING/SKYROADS/WORLD1.LZS" },
-    ],
-    dosboxConf: CFG.svga
-  },
-  {
-    id: "ddave",
-    title: "Dangerous Dave",
-    subtitle: "Platformer (1990)",
-    command: "DAVE.EXE",
-    files: [
-      { path: "DAVE.EXE", url: RAW + "/LEVELS/DDAVE/DAVE.EXE" },
-      { path: "DSCORES.DAV", url: RAW + "/LEVELS/DDAVE/DSCORES.DAV" },
-    ],
-    dosboxConf: CFG.dave
-  },
-  {
-    id: "pako",
-    title: "PAKO II",
-    subtitle: "Pac-Man clone (1996)",
-    command: "pako.exe",
-    files: [
-      { path: "pako.exe", url: RAW + "/ARCADE/PAKO/pako.exe" },
-      { path: "PAKO2.D01", url: RAW + "/ARCADE/PAKO/PAKO2.D01" },
-      { path: "PAKO2.D02", url: RAW + "/ARCADE/PAKO/PAKO2.D02" },
-      { path: "PAKO2.D03", url: RAW + "/ARCADE/PAKO/PAKO2.D03" },
-      { path: "PAKO2.D04", url: RAW + "/ARCADE/PAKO/PAKO2.D04" },
-      { path: "PAKO2.D05", url: RAW + "/ARCADE/PAKO/PAKO2.D05" },
-      { path: "PAKO2.HI", url: RAW + "/ARCADE/PAKO/PAKO2.HI" },
-    ]
-  },
-
-  {
-    id: "keen4",
-    title: "Commander Keen 4",
-    subtitle: "Platformer (1991)",
-    command: "KEEN4E.EXE",
-    files: [
-      { path: "KEEN4E.EXE", url: RAW + "/LEVELS/KEEN4/KEEN4E.EXE" },
-      { path: "AUDIO.CK4", url: RAW + "/LEVELS/KEEN4/AUDIO.CK4" },
-      { path: "CONFIG.CK4", url: RAW + "/LEVELS/KEEN4/CONFIG.CK4" },
-      { path: "EGAGRAPH.CK4", url: RAW + "/LEVELS/KEEN4/EGAGRAPH.CK4" },
-      { path: "GAMEMAPS.CK4", url: RAW + "/LEVELS/KEEN4/GAMEMAPS.CK4" },
-    ],
-    dosboxConf: CFG.svga
-
-  },
-];
+const GAMES = [];
 
 const container = document.getElementById("dos-container");
 const list = document.getElementById("game-list");
@@ -286,8 +171,14 @@ async function launchGame(game) {
   }
 }
 </script>
-<script src="games/jazz.js"></script>
+<script src="games/greedy.js"></script>
+<script src="games/speed-haste.js"></script>
+<script src="games/skyroads.js"></script>
+<script src="games/ddave.js"></script>
+<script src="games/pako.js"></script>
+<script src="games/keen4.js"></script>
 <script src="games/mario.js"></script>
+<script src="games/jazz.js"></script>
 <script>
 renderGames();
 </script>
