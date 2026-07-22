@@ -7,9 +7,6 @@ GAMES.push({
     { path: "MARIO.EXE", url: RAW + "/LEVELS/MARIO/MARIO.EXE" },
   ],
   dosboxConf: [
-    "[sdl]",
-    "output=surface",
-    "",
     "[render]",
     "aspect=false",
   ].join("\n")
