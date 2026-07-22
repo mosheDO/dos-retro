@@ -9,5 +9,9 @@ GAMES.push({
     { path: "MARIO.DA2", url: RAW + "/LEVELS/MARIO/MARIO.DA2" },
     { path: "DF.EXE",    url: RAW + "/LEVELS/MARIO/DF.EXE" },
     { path: "MARIO.PIF", url: RAW + "/LEVELS/MARIO/MARIO.PIF" },
-  ]
+  ],
+  dosboxConf: [
+    "[cpu]",
+    "cycles=6000 fixed",
+  ].join("\n")
 });
