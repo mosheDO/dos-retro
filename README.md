@@ -32,7 +32,7 @@ DOS games playable in the browser via [js-dos](https://js-dos.com). No downloads
    ```
 3. Add a `<script src="games/my-game.js"></script>` tag to `docs/index.html` next to the other game tags (it must come after the inline script that defines `GAMES` / `RAW` / `CFG` and before the final `renderGames()` call).
 4. No `dosboxConf` is needed if the default config (SVGA, aspect, normal2x scaler) works — the `[autoexec]` is generated from `command` automatically
-5. Push — the game appears on the site automatically
+5. Open a pull request (see [CONTRIBUTING.md](CONTRIBUTING.md) — direct pushes to `master` are blocked) and merge it. The game appears on the site automatically.
 
 ## Currently playable
 
