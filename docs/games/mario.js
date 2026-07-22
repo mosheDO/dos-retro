@@ -10,16 +10,7 @@ GAMES.push({
     "[sdl]",
     "output=surface",
     "",
-    "[dosbox]",
-    "machine=svga_s3",
-    "",
     "[render]",
     "aspect=false",
-    "scaler=normal2x",
-    "",
-    "[cpu]",
-    "core=auto",
-    "cputype=auto",
-    "cycles=auto",
   ].join("\n")
 });
